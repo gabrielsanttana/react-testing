@@ -4,32 +4,32 @@ import {useSelector, useDispatch} from "react-redux";
 function TechList() {
   const [newTech, setNewTech] = useState("");
 
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
   const techs = useSelector(state => state.techs);
- 
-  function handleAddTech() {
-    dispach({type: "ADD_TECH", payload: {tech: newTech}});
+
+  function addNewTech() {
+    dispatch({type: "ADD_TECH", payload: {newTech}});
+    
     setNewTech("");
   }
 
   return (
-    <form data-testid="tech-form" onSubmit={handleAddTech} > 
+    <>
       <ul data-testid="tech-list">
         {techs.map((tech, index) => (
           <li key={index}>{tech}</li>
         ))}
+        
       </ul>
 
-      <label htmlFor="tech">Tech</label>
-      <input  
-        id="tech"
-        value={newTech}
-        onChange={(event) => setNewTech(event.target.value)}
-      />
-      
-      <button type="submit">Adicionar</button>
-    </form>
+      <form data-testid="tech-form" onSubmit={addNewTech}>
+        <label htmlFor="tech">Tech</label>
+        <input id="tech" type="text" value={newTech} onChange={(event) => setNewTech(event.target.value)} />
+
+        <button onClick={addNewTech}>Adicionar</button>
+      </form>
+    </>
   );
 }
 
-export default TechList;
+export default TechList;  

@@ -1,6 +1,7 @@
 import React from "react";
 import {render, fireEvent, cleanup} from "@testing-library/react";
 import {useSelector, useDispatch} from "react-redux";
+import {addTech} from "../../store/modules/techs/actions";
 
 import TechList from "./index";
 
@@ -44,9 +45,22 @@ describe("TechList component", () => {
 
     const {getByText, getByTestId, debug} = render(<TechList />);
 
-    debug();
-
     expect(getByTestId("tech-list")).toContainElement(getByText("React"));
     expect(getByTestId("tech-list")).toContainElement(getByText("Node"));
+
+    cleanup();
   }); 
+
+  it("adds a new tech in the state", () => {
+    const {getByText, getByLabelText, getByTestId} = render(<TechList />);
+
+    const dispatch = jest.fn();
+
+    useDispatch.mockReturnValue(dispatch);
+
+    fireEvent.change(getByLabelText("Tech"), {target: {value: "React"}});
+    fireEvent.submit(getByTestId("tech-form"));
+
+    expect(dispatch).toHaveBeenCalledWith(addTech("React"));
+  });
 });

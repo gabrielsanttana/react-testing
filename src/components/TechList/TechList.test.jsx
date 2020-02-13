@@ -52,7 +52,7 @@ describe("TechList component", () => {
   }); 
 
   it("adds a new tech in the state", () => {
-    const {getByText, getByLabelText, getByTestId} = render(<TechList />);
+    const {getByLabelText, getByTestId} = render(<TechList />);
 
     const dispatch = jest.fn();
 
